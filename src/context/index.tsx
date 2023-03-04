@@ -61,7 +61,6 @@ export function InventoryProvider({ children }: InventoryProviderProps) {
 
   const createInventory = async (formData: InventoryInput) => {
     try {
-      console.log("formData", formData);
       await API.create({ ...formData }).then((res) => {
         setInventories([...inventories, res.data]);
         setItems(items + 1);

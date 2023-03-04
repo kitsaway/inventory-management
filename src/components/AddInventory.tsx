@@ -66,7 +66,6 @@ const AddInventory: React.FC = (): JSX.Element => {
   ) as InventoryContextType;
 
   const onSubmit = (data: InventoryInput) => {
-    console.log("formData in submit", data);
     createInventory(data);
     reset();
   };
