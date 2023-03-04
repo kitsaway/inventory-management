@@ -18,13 +18,25 @@ export interface InventoryContextType {
   deleteInventory: (id: string) => void;
 }
 
-const InventoryContext = createContext<InventoryContextType | null>(null);
+const initContext = {
+  inventories: [],
+  currentPage: 1,
+  pages: 0,
+  items: 0,
+  handleFilter: () => {},
+  handlePageChange: () => {},
+  getInventories: () => {},
+  createInventory: () => {},
+  deleteInventory: () => {},
+};
+
+const InventoryContext = createContext<InventoryContextType>(initContext);
 
 export function InventoryProvider({ children }: InventoryProviderProps) {
   const [inventories, setInventories] = useState<InventoryOutput[]>([]);
   const [filter, setFilter] = useState<string>("");
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [pages, setPages] = useState<number>(1);
+  const [pages, setPages] = useState<number>(0);
   const [items, setItems] = useState<number>(0);
 
   const handlePageChange = useCallback((page: number) => {
@@ -36,25 +48,38 @@ export function InventoryProvider({ children }: InventoryProviderProps) {
   }, []);
 
   const getInventories = async (page: number, filter: string) => {
-    await API.getAll(page, filter).then((res) => {
-      setInventories([...res.data]);
-      setPages(res.pages);
-      setItems(res.count);
-    });
+    try {
+      await API.getAll(page, filter).then((res) => {
+        setInventories([...res.data]);
+        setPages(res.pages);
+        setItems(res.count);
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const createInventory = async (formData: InventoryInput) => {
-    await API.create(formData).then((res) => {
-      setInventories([...inventories, res.data]);
-      setItems(items + 1);
-    });
+    try {
+      console.log("formData", formData);
+      await API.create({ ...formData }).then((res) => {
+        setInventories([...inventories, res.data]);
+        setItems(items + 1);
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const deleteInventory = async (id: string) => {
-    await API.deleteById(id).then(() => {
-      setInventories(inventories?.filter((item) => item.id !== id));
-      setItems(items - 1);
-    });
+    try {
+      await API.deleteById(id).then(() => {
+        setInventories(inventories?.filter((item) => item.id !== id));
+        setItems(items - 1);
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {
