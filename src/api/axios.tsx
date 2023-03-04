@@ -3,7 +3,7 @@ import axios from "axios";
 export interface InventoryInput {
   name: string;
   location: string;
-  price: string;
+  price: number;
 }
 
 export interface InventoryOutput extends InventoryInput {
@@ -13,9 +13,7 @@ export interface InventoryOutput extends InventoryInput {
 const url: string = process.env.REACT_APP_URL;
 
 export const create = async (formData: InventoryInput) => {
-  const { data } = await axios.post(url, {
-    payload: formData,
-  });
+  const { data } = await axios.post(url, formData);
   return data;
 };
 
