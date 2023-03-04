@@ -1,0 +1,73 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0 auto;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.container.header {
+  max-width: 80%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.table.table-custom {
+  max-width: 90%;
+  margin: 2rem auto;
+  text-align: center;
+}
+
+.container.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pagination .page-item .page-link {
+  color: black;
+}
+
+.pagination .page-item.active > .page-link {
+  color: white;
+  background-color: #000;
+  border: #000;
+}
+
+.text-muted.total {
+  padding: 0 1rem;
+}
+
+.filter-container {
+  margin: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  max-width: 300px;
+}
+
+.filter-container .text-muted{
+  padding: 0 1rem;
+}
+
+.form-container {
+  max-width: 70%;
+  margin: 2rem auto;
+}
+
+.form-container .submit-button{
+  float: right;
+}
