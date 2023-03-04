@@ -7,6 +7,7 @@ import InputField from "./atoms/InputField";
 import { ChangeEvent } from "react";
 import InventoryContext, { InventoryContextType } from "./../context/index";
 import { InventoryInput } from "../api/axios";
+import Popup from "./atoms/Popup";
 
 type SelectOption = {
   id: string;
@@ -61,7 +62,7 @@ const AddInventory: React.FC = (): JSX.Element => {
       price: undefined,
     },
   });
-  const { createInventory } = useContext(
+  const { createInventory, feedback } = useContext(
     InventoryContext
   ) as InventoryContextType;
 
@@ -83,56 +84,63 @@ const AddInventory: React.FC = (): JSX.Element => {
     }
   };
   return (
-    <form
-      className="column g-3 needs-validation form-container"
-      noValidate
-      onSubmit={handleSubmit(onSubmit)}
-    >
-      <div className="mb-3">
-        <label htmlFor="location" className="form-label">
-          ადგილმდებარეობა
-        </label>
-        <select
-          className={`form-select ${errors.name?.message ? "is-invalid" : ""}`}
-          aria-describedby="selectValidation"
-          id="location"
-          {...register("location", { required: true })}
-          onChange={(e) => setValue("location", e.target.value)}
-        >
-          <option value={""}>აარჩიე ადგილმდებარეობა</option>
-          {options.map((opt) => (
-            <option key={opt.id} value={opt.option}>
-              {opt.option}
-            </option>
-          ))}
-        </select>
-        <div id="selectValidation" className="invalid-feedback">
-          {errors.location?.message}
+    <>
+      <Popup type={feedback.type} message={feedback.message} />
+      <form
+        className="column g-3 needs-validation form-container"
+        noValidate
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <div className="mb-3">
+          <label htmlFor="location" className="form-label">
+            ადგილმდებარეობა
+          </label>
+          <select
+            className={`form-select ${
+              errors.name?.message ? "is-invalid" : ""
+            }`}
+            aria-describedby="selectValidation"
+            id="location"
+            {...register("location", { required: true })}
+            onChange={(e) => setValue("location", e.target.value)}
+          >
+            <option value={""}>აარჩიე ადგილმდებარეობა</option>
+            {options.map((opt) => (
+              <option key={opt.id} value={opt.option}>
+                {opt.option}
+              </option>
+            ))}
+          </select>
+          <div id="selectValidation" className="invalid-feedback">
+            {errors.location?.message}
+          </div>
         </div>
-      </div>
-      <InputField
-        type="text"
-        label="ნივთის დასახელება"
-        className={`form-control ${errors.name?.message ? "is-invalid" : ""}`}
-        aria-describedby="nameValidation"
-        feedbackId="nameValidation"
-        errorMessage={errors.name?.message}
-        {...register("name")}
-        onChange={(e) => setValue("name", e.target.value)}
-      />
-      <InputField
-        type="number"
-        step="0.01"
-        label="ნივთის ღირებულება (ლ)"
-        className={`form-control ${errors.price?.message ? "is-invalid" : ""}`}
-        aria-describedby="priceValidation"
-        feedbackId="priceValidation"
-        errorMessage={errors.price?.message}
-        {...register("price")}
-        onChange={(e) => checkForType(e)}
-      />
-      <AddButton className="submit-button" />
-    </form>
+        <InputField
+          type="text"
+          label="ნივთის დასახელება"
+          className={`form-control ${errors.name?.message ? "is-invalid" : ""}`}
+          aria-describedby="nameValidation"
+          feedbackId="nameValidation"
+          errorMessage={errors.name?.message}
+          {...register("name")}
+          onChange={(e) => setValue("name", e.target.value)}
+        />
+        <InputField
+          type="number"
+          step="0.01"
+          label="ნივთის ღირებულება (ლ)"
+          className={`form-control ${
+            errors.price?.message ? "is-invalid" : ""
+          }`}
+          aria-describedby="priceValidation"
+          feedbackId="priceValidation"
+          errorMessage={errors.price?.message}
+          {...register("price")}
+          onChange={(e) => checkForType(e)}
+        />
+        <AddButton className="submit-button" />
+      </form>
+    </>
   );
 };
 
