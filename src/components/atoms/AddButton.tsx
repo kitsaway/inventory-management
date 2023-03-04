@@ -1,19 +1,19 @@
+import { MouseEventHandler } from "react";
+
 interface ButtonPropsI {
   children?: React.ReactNode;
   className?: string;
   props?: any;
-  onClick?: any;
+  onClick?: MouseEventHandler<HTMLElement>;
 }
 
 const AddButton: React.FC<ButtonPropsI> = ({
   onClick,
-  children,
   className,
-  ...props
 }) => {
   return (
     <button
-      type="button"
+      type="submit"
       className={`btn btn-dark ${className}`}
       onClick={onClick}
     >

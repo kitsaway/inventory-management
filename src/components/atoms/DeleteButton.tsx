@@ -5,11 +5,12 @@ const DeleteButton = (props: { id: string }): JSX.Element => {
   const { deleteInventory } = useContext(
     InventoryContext
   ) as InventoryContextType;
+  const { id } = props;
   return (
     <button
       type="button"
       className="btn btn-danger"
-      onClick={() => deleteInventory(props.id)}
+      onClick={() => deleteInventory(id)}
     >
       წაშლა
     </button>
